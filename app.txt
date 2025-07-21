@@ -1,0 +1,12 @@
+gemini-chat-app/
+├── app.py                # Flask backend
+├── static/
+│   ├── css/
+│   │   └── style.css     # Custom styles
+│   ├── js/
+│   │   └── script.js     # Frontend JavaScript
+│   └── images/           # App icons and images
+├── templates/
+│   └── index.html        # Main HTML template
+├── requirements.txt      # Python dependencies
+└── README.md             # Project documentation
