@@ -71,6 +71,8 @@ body {
     line-height: 1.6;
     height: 100vh;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
     position: relative;
     transition: background 0.5s ease;
 }
@@ -202,6 +204,7 @@ body {
     letter-spacing: -0.5px;
     background: linear-gradient(to right, var(--text-main), var(--primary));
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
@@ -598,6 +601,97 @@ body {
     100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
 }
 
+/* Footer Bar */
+.app-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.6rem 1.5rem;
+    flex-shrink: 0;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    gap: 1rem;
+}
+
+.footer-dev {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-weight: 500;
+}
+
+.footer-dev i {
+    color: var(--primary);
+}
+
+.footer-dev a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s ease;
+}
+
+.footer-dev a:hover {
+    color: var(--primary-hover);
+    text-decoration: underline;
+}
+
+.footer-version {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.version-badge,
+.model-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    background: var(--glass-border);
+    padding: 0.2rem 0.6rem;
+    border-radius: 20px;
+    border: 1px solid var(--glass-border);
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    transition: background 0.2s ease;
+}
+
+.version-badge i {
+    color: var(--secondary);
+    font-size: 0.7rem;
+}
+
+.model-badge i {
+    color: var(--primary);
+    font-size: 0.7rem;
+}
+
+.footer-clock {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-variant-numeric: tabular-nums;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: var(--text-main);
+    background: var(--glass-border);
+    padding: 0.2rem 0.75rem;
+    border-radius: 20px;
+    border: 1px solid var(--glass-border);
+}
+
+.footer-clock i {
+    color: var(--primary);
+    font-size: 0.75rem;
+    animation: tickTock 1s step-start infinite;
+}
+
+@keyframes tickTock {
+    0%  { opacity: 1; }
+    50% { opacity: 0.3; }
+    100%{ opacity: 1; }
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .app-container {
@@ -621,5 +715,17 @@ body {
     
     .input-wrapper {
         padding: 1rem;
+    }
+
+    .app-footer {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+    }
+
+    .footer-version {
+        flex-wrap: wrap;
+        justify-content: center;
     }
 }

@@ -252,4 +252,23 @@ document.addEventListener('DOMContentLoaded', function() {
             }[tag])
         );
     }
+
+    // Live Real-Time Clock
+    const liveClock = document.getElementById('live-clock');
+    function updateClock() {
+        const now = new Date();
+        const options = {
+            weekday: 'short',
+            year: 'numeric',
+            month: 'short',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: true
+        };
+        liveClock.textContent = now.toLocaleString(undefined, options);
+    }
+    updateClock(); // Set immediately
+    setInterval(updateClock, 1000); // Update every second
 });
