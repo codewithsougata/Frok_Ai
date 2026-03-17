@@ -8,7 +8,8 @@ load_dotenv()
 
 app = Flask(__name__)
 
-API_KEY = "AIzaSyBemB7raa_ObyVjgaS5dDYFFYvXnHw-o8A"  # Remove any spaces from your actual key
+# Get API key from .env
+API_KEY = os.getenv("GEMINI_API_KEY")  # Remove any spaces from your actual key
 
 genai.configure(api_key=API_KEY)
 

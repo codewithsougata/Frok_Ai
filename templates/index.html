@@ -1,69 +1,114 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
+    <link rel="icon" type="image/svg+xml" href="/file.svg"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gemini AI Chat</title>
+    <title>Frog AI | Premium Chat</title>
+    
+    <!-- Fonts and Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Highlight.js for code formatting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="/static/css/style.css">
     <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon">
 </head>
 <body>
+    <!-- Animated background elements -->
+    <div class="bg-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+    </div>
+
     <div class="app-container">
-        <header class="app-header">
+        <header class="app-header glass-panel">
             <div class="logo-container">
-                <img src="/static/images/image.png" alt="Gemini Logo" class="logo">
-                <h1>𝑭𝒓𝒐𝒈 𝑨𝒊 </h1>
+                <div class="logo-wrapper">
+                    <img src="/static/images/image.png" alt="Frog AI Logo" class="logo">
+                </div>
+                <div>
+                    <h1>Frog AI</h1>
+                    <span class="status-badge"><span class="pulse"></span>Online</span>
+                </div>
             </div>
-            <button id="clear-chat" class="btn-clear">
-                <i class="fas fa-trash-alt"></i> Clear Chat
-            </button>
+            
+            <div class="header-actions">
+                <button id="theme-toggle" class="btn-icon" aria-label="Toggle Theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button id="clear-chat" class="btn-ghost" aria-label="Clear Chat">
+                    <i class="fas fa-trash-alt"></i> Clear
+                </button>
+            </div>
         </header>
 
-        <main class="chat-container">
+        <main class="chat-container glass-panel">
             <div class="chat-history" id="chat-history">
-                <!-- Messages will appear here -->
-                <div class="welcome-message">
-                    <h2>Welcome to Frog AI Chat</h2>
-                    <p>Ask me anything! I can help with coding, creative writing, research, and more.</p>
+                <!-- Welcome Message dynamically loads here -->
+                <div class="welcome-message" id="welcome-message-dom">
+                    <div class="welcome-icon">
+                        <i class="fas fa-frog"></i>
+                    </div>
+                    <h2>How can I help you today?</h2>
+                    <p>I'm your intelligent assistant, ready to help with coding, writing, research, and creative tasks.</p>
+                    
                     <div class="suggestions">
-                        <button class="suggestion-btn">Explain quantum computing</button>
-                        <button class="suggestion-btn">Write a poem about technology</button>
-                        <button class="suggestion-btn">Help me debug Python code</button>
-                        <button class="suggestion-btn">Plan a 3-day trip to Tokyo</button>
+                        <button class="suggestion-btn">
+                            <i class="fas fa-atom"></i>
+                            <span>Explain quantum computing</span>
+                        </button>
+                        <button class="suggestion-btn">
+                            <i class="fas fa-pen-nib"></i>
+                            <span>Write a poem about technology</span>
+                        </button>
+                        <button class="suggestion-btn">
+                            <i class="fas fa-code"></i>
+                            <span>Help me debug Python code</span>
+                        </button>
+                        <button class="suggestion-btn">
+                            <i class="fas fa-plane"></i>
+                            <span>Plan a 3-day trip to Tokyo</span>
+                        </button>
                     </div>
                 </div>
             </div>
 
-            <div class="input-container">
-                <form id="chat-form">
-                    <input type="text" id="user-input" placeholder="Type your message here..." autocomplete="off">
-                    <button type="submit" id="send-btn">
-                        <i class="fas fa-paper-plane"></i>
-                    </button>
-                    <button type="button" id="mic-btn">
-                        <i class="fas fa-microphone"></i>
-                    </button>
-                </form>
+            <div class="input-wrapper">
                 <div class="typing-indicator" id="typing-indicator">
-                    <span></span>
-                    <span></span>
-                    <span></span>
+                    <div class="dots-container">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                    <span class="typing-text">Frog AI is typing...</span>
                 </div>
+                
+                <form id="chat-form" class="glass-input-container">
+                    <input type="text" id="user-input" placeholder="Message Frog AI..." autocomplete="off">
+                    
+                    <div class="input-actions">
+                        <button type="button" id="mic-btn" class="btn-icon" aria-label="Use Microphone">
+                            <i class="fas fa-microphone"></i>
+                        </button>
+                        <button type="submit" id="send-btn" class="btn-primary" aria-label="Send Message" disabled>
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </form>
+                <div class="disclaimer">Frog AI can make mistakes. Consider verifying important information.</div>
             </div>
         </main>
-
-        <footer class="app-footer">
-            <p>Powered by Google Frog AI</p>
-            <div class="social-links">
-                <a href="#" class="social-link"><i class="fab fa-github"></i></a>
-                <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-                <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
-            </div>
-        </footer>
     </div>
 
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.6/purify.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
     <script src="/static/js/script.js"></script>
 </body>
 </html>
