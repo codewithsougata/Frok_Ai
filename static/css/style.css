@@ -69,7 +69,7 @@ body {
     background: linear-gradient(135deg, var(--bg-gradient-1), var(--bg-gradient-2));
     color: var(--text-main);
     line-height: 1.6;
-    height: 100vh;
+    height: 100dvh;
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -153,7 +153,7 @@ body {
 .app-container {
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    height: 100dvh;
     max-width: 1200px;
     margin: 0 auto;
     padding: 1rem;
@@ -692,40 +692,254 @@ body {
     100%{ opacity: 1; }
 }
 
-/* Responsive */
+/* ==============================
+   RESPONSIVE SYSTEM
+   Mobile-first approach
+   Breakpoints: xs <480, sm 481-768, md 769-1024, lg 1025+
+   ============================== */
+
+/* Prevent iOS font-size zoom on focus */
+#user-input {
+    font-size: 16px;
+}
+
+/* ── Medium / Tablet ── */
 @media (max-width: 768px) {
     .app-container {
         padding: 0;
         gap: 0;
+        height: 100dvh;
     }
-    
+
     .glass-panel {
         border-radius: 0;
         border: none;
         border-bottom: 1px solid var(--glass-border);
     }
-    
-    .logo-container h1 {
-        display: none;
-    }
-    
-    .message-wrapper {
-        max-width: 95%;
-    }
-    
-    .input-wrapper {
-        padding: 1rem;
+
+    /* Header */
+    .app-header {
+        padding: 0.75rem 1rem;
     }
 
+    .logo {
+        height: 40px;
+        width: 40px;
+    }
+
+    .logo-container h1 {
+        font-size: 1.15rem;
+    }
+
+    /* Suggestions: 2 columns on tablet */
+    .suggestions {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+    }
+
+    /* Messages */
+    .message-wrapper {
+        max-width: 92%;
+    }
+
+    /* Input */
+    .input-wrapper {
+        padding: 0.75rem 1rem;
+        padding-bottom: calc(0.75rem + env(safe-area-inset-bottom));
+    }
+
+    /* Footer */
     .app-footer {
         flex-wrap: wrap;
         justify-content: center;
-        gap: 0.5rem;
+        gap: 0.4rem;
         padding: 0.5rem 1rem;
+        padding-bottom: calc(0.5rem + env(safe-area-inset-bottom));
     }
 
     .footer-version {
         flex-wrap: wrap;
         justify-content: center;
+    }
+}
+
+/* ── Small Mobile ── */
+@media (max-width: 480px) {
+    /* Header: tighten up, show h1 but smaller */
+    .app-header {
+        padding: 0.6rem 0.875rem;
+    }
+
+    .logo {
+        height: 34px;
+        width: 34px;
+        border-radius: 8px;
+    }
+
+    .logo-container {
+        gap: 0.6rem;
+    }
+
+    .logo-container h1 {
+        font-size: 1rem;
+        letter-spacing: -0.3px;
+    }
+
+    .status-badge {
+        font-size: 0.68rem;
+    }
+
+    .btn-ghost {
+        padding: 0 0.6rem;
+        font-size: 0.8rem;
+        height: 36px;
+    }
+
+    .btn-icon {
+        width: 36px;
+        height: 36px;
+        font-size: 0.9rem;
+    }
+
+    /* Welcome screen */
+    .welcome-message {
+        padding: 1.25rem 0.75rem;
+    }
+
+    .welcome-icon {
+        font-size: 2.25rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .welcome-message h2 {
+        font-size: 1.35rem;
+    }
+
+    .welcome-message p {
+        font-size: 0.9rem;
+    }
+
+    /* Suggestions: single column on phones */
+    .suggestions {
+        grid-template-columns: 1fr;
+        gap: 0.6rem;
+    }
+
+    .suggestion-btn {
+        flex-direction: row;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.75rem 1rem;
+    }
+
+    .suggestion-btn i {
+        font-size: 1.1rem;
+        flex-shrink: 0;
+    }
+
+    /* Chat messages */
+    .message-wrapper {
+        max-width: 95%;
+    }
+
+    .message {
+        padding: 0.75rem 1rem;
+        font-size: 0.95rem;
+    }
+
+    .chat-history {
+        padding: 1rem 0.75rem;
+        gap: 1rem;
+    }
+
+    /* Input */
+    .input-wrapper {
+        padding: 0.6rem 0.75rem;
+        padding-bottom: calc(0.6rem + env(safe-area-inset-bottom));
+    }
+
+    .glass-input-container {
+        border-radius: 14px;
+    }
+
+    #user-input {
+        padding: 0.4rem 0.75rem;
+    }
+
+    .btn-primary {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+    }
+
+    .disclaimer {
+        font-size: 0.68rem;
+        margin-top: 0.5rem;
+    }
+
+    /* Footer: compact, stack all 3 items */
+    .app-footer {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.35rem;
+        padding: 0.5rem 0.75rem;
+        padding-bottom: calc(0.5rem + env(safe-area-inset-bottom));
+        font-size: 0.72rem;
+    }
+
+    /* Hide date part of clock on tiny screens, keep time */
+    .footer-clock {
+        padding: 0.15rem 0.6rem;
+    }
+
+    .footer-version {
+        gap: 0.4rem;
+    }
+
+    .version-badge,
+    .model-badge {
+        padding: 0.15rem 0.5rem;
+        font-size: 0.7rem;
+    }
+}
+
+/* ── Extra-small / very old phones ── */
+@media (max-width: 360px) {
+    .logo-container h1 {
+        display: none;
+    }
+
+    .suggestions {
+        grid-template-columns: 1fr;
+    }
+
+    .footer-version .model-badge {
+        display: none; /* Only show version tag on tiny screens */
+    }
+}
+
+/* ── Large desktop: slightly wider max-width ── */
+@media (min-width: 1400px) {
+    .app-container {
+        max-width: 1400px;
+    }
+}
+
+/* ── Touch device hover removal ── */
+@media (hover: none) {
+    .suggestion-btn:hover {
+        transform: none;
+        box-shadow: none;
+    }
+
+    .btn-ghost:hover {
+        background: transparent;
+        border-color: var(--glass-border);
+        color: var(--text-main);
+    }
+
+    .btn-icon:hover {
+        background: transparent;
+        transform: none;
     }
 }
