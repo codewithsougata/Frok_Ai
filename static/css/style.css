@@ -4,14 +4,14 @@
  */
 
  :root {
-    /* Color Palette - Dark Theme (Default) */
-    --bg-base: #0f172a;
-    --bg-gradient-1: #1e1b4b;
-    --bg-gradient-2: #0f172a;
+    /* Color Palette - Dark Theme (Default) — pure black base */
+    --bg-base: #000000;
+    --bg-gradient-1: #000000;
+    --bg-gradient-2: #0a0a0a;
     
-    --glass-bg: rgba(30, 41, 59, 0.7);
-    --glass-border: rgba(255, 255, 255, 0.1);
-    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    --glass-bg: rgba(15, 15, 15, 0.85);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6);
     
     --primary: #8b5cf6;
     --primary-hover: #7c3aed;
@@ -21,13 +21,13 @@
     --text-main: #f8fafc;
     --text-muted: #94a3b8;
     
-    --user-msg-bg: rgba(139, 92, 246, 0.2);
-    --user-msg-border: rgba(139, 92, 246, 0.4);
+    --user-msg-bg: rgba(139, 92, 246, 0.18);
+    --user-msg-border: rgba(139, 92, 246, 0.35);
     
-    --ai-msg-bg: rgba(30, 41, 59, 0.8);
-    --ai-msg-border: rgba(255, 255, 255, 0.05);
+    --ai-msg-bg: rgba(20, 20, 20, 0.9);
+    --ai-msg-border: rgba(255, 255, 255, 0.06);
 
-    --code-bg: #1e1e1e; /* Highlight.js atom dark base */
+    --code-bg: #111111;
     
     --layout-radius: 20px;
     --element-radius: 12px;
@@ -66,7 +66,7 @@
 
 body {
     background-color: var(--bg-base);
-    background: linear-gradient(135deg, var(--bg-gradient-1), var(--bg-gradient-2));
+    background: var(--bg-base);
     color: var(--text-main);
     line-height: 1.6;
     height: 100dvh;
@@ -93,60 +93,9 @@ body {
     background: var(--text-muted);
 }
 
-/* Background Shapes Animations */
+/* Background Shapes — hidden on black theme */
 .bg-shapes {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    z-index: -1;
-    pointer-events: none;
-}
-
-.shape {
-    position: absolute;
-    filter: blur(80px);
-    opacity: 0.6;
-    border-radius: 50%;
-    animation: float 20s infinite ease-in-out alternate;
-}
-
-.shape-1 {
-    width: 400px;
-    height: 400px;
-    background: var(--primary);
-    top: -100px;
-    left: -100px;
-    animation-delay: 0s;
-}
-
-.shape-2 {
-    width: 300px;
-    height: 300px;
-    background: #0ea5e9;
-    bottom: -50px;
-    right: -100px;
-    animation-delay: -5s;
-    animation-duration: 25s;
-}
-
-.shape-3 {
-    width: 250px;
-    height: 250px;
-    background: var(--secondary);
-    top: 50%;
-    left: 40%;
-    animation-delay: -10s;
-    animation-duration: 30s;
-}
-
-@keyframes float {
-    0% { transform: translate(0, 0) scale(1); }
-    33% { transform: translate(30px, -50px) scale(1.1); }
-    66% { transform: translate(-20px, 20px) scale(0.9); }
-    100% { transform: translate(0, 0) scale(1); }
+    display: none;
 }
 
 /* Layout Containers */
@@ -285,16 +234,19 @@ body {
     flex-direction: column;
     overflow: hidden;
     position: relative;
+    min-width: 0;
 }
 
 .chat-history {
     flex: 1;
     overflow-y: auto;
+    overflow-x: hidden;
     padding: 1.5rem;
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
     scroll-behavior: smooth;
+    min-width: 0;
 }
 
 /* Welcome Message */
@@ -363,25 +315,40 @@ body {
 .message-wrapper {
     display: flex;
     flex-direction: column;
+    /* cap width but let it shrink; fixes long-answer overflow */
+    width: 85%;
     max-width: 85%;
+    min-width: 0;
     animation: slideInUp 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 }
 
 .message-wrapper.user {
     align-self: flex-end;
     align-items: flex-end;
+    width: auto;
+    max-width: 85%;
 }
 
 .message-wrapper.assistant {
     align-self: flex-start;
     align-items: flex-start;
+    /* take full allocated width so long content doesn't shrink-wrap weirdly */
+    width: 85%;
+    max-width: 85%;
 }
 
 .message {
     padding: 1rem 1.25rem;
-    line-height: 1.6;
+    line-height: 1.7;
     font-size: 1rem;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    /* Prevent long words / URLs from breaking the layout */
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    min-width: 0;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .user .message {
@@ -389,6 +356,8 @@ body {
     border: 1px solid var(--user-msg-border);
     border-radius: 18px 18px 4px 18px;
     color: var(--text-main);
+    width: auto;
+    min-width: 0;
 }
 
 .assistant .message {
@@ -396,6 +365,26 @@ body {
     border: 1px solid var(--ai-msg-border);
     border-radius: 18px 18px 18px 4px;
     color: var(--text-main);
+    /* Fixed height — scrolls inside the bubble for long answers */
+    max-height: 60vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    /* Thin custom scrollbar inside the bubble */
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary) transparent;
+}
+
+/* Webkit scrollbar inside assistant bubble */
+.assistant .message::-webkit-scrollbar {
+    width: 4px;
+}
+.assistant .message::-webkit-scrollbar-track {
+    background: transparent;
+}
+.assistant .message::-webkit-scrollbar-thumb {
+    background: var(--primary);
+    border-radius: 4px;
+    opacity: 0.6;
 }
 
 .message-time {
@@ -444,7 +433,10 @@ body {
     padding: 1rem;
     overflow-x: auto;
     margin: 1rem 0;
-    box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.3);
+    /* Stop code blocks from pushing the message wider than its container */
+    max-width: 100%;
+    min-width: 0;
 }
 
 .message pre code {
@@ -453,6 +445,9 @@ body {
     border: none;
     color: inherit;
     font-size: 0.9em;
+    white-space: pre;
+    word-break: normal;
+    overflow-wrap: normal;
 }
 
 /* Input Area */
@@ -739,7 +734,21 @@ body {
 
     /* Messages */
     .message-wrapper {
+        width: 92%;
         max-width: 92%;
+    }
+    .message-wrapper.user {
+        width: auto;
+        max-width: 92%;
+    }
+    .message-wrapper.assistant {
+        width: 92%;
+        max-width: 92%;
+    }
+
+    /* Reduce bubble max-height on tablet */
+    .assistant .message {
+        max-height: 55vh;
     }
 
     /* Input */
@@ -839,7 +848,21 @@ body {
 
     /* Chat messages */
     .message-wrapper {
+        width: 95%;
         max-width: 95%;
+    }
+    .message-wrapper.user {
+        width: auto;
+        max-width: 95%;
+    }
+    .message-wrapper.assistant {
+        width: 95%;
+        max-width: 95%;
+    }
+
+    /* Reduce bubble max-height on phones */
+    .assistant .message {
+        max-height: 50vh;
     }
 
     .message {
